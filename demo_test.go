@@ -12,31 +12,35 @@ import (
 	"github.com/yyle88/runpath"
 )
 
+func GetDemo1Path() string {
+	return runpath.PARENT.Join("demo1/go-kratos-demo")
+}
+
+func GetDemo2Path() string {
+	return runpath.PARENT.Join("demo2/go-kratos-demo")
+}
+
 func TestShow1Changes(t *testing.T) {
-	compareDemo(t, "demo1/go-kratos-demo")
+	path0 := osmustexist.ROOT(demokratos.GetDemo1Path())
+	path1 := osmustexist.ROOT(GetDemo1Path())
+	comparePath(t, path0, path1)
 }
 
 func TestShow2Changes(t *testing.T) {
-	compareDemo(t, "demo2/go-kratos-demo")
-}
-
-func compareDemo(t *testing.T, projectName string) {
-	path1 := osmustexist.ROOT(filepath.Join(demokratos.SourceRoot(), projectName))
-	t.Log(path1)
-
-	path2 := osmustexist.ROOT(runpath.PARENT.Join(projectName))
-	t.Log(path2)
-
+	path1 := osmustexist.ROOT(demokratos.GetDemo2Path())
+	path2 := osmustexist.ROOT(GetDemo2Path())
 	comparePath(t, path1, path2)
 }
 
 func TestCompareDemos(t *testing.T) {
-	path1 := osmustexist.ROOT(runpath.PARENT.Join("demo1/go-kratos-demo"))
-	path2 := osmustexist.ROOT(runpath.PARENT.Join("demo2/go-kratos-demo"))
+	path1 := osmustexist.ROOT(GetDemo1Path())
+	path2 := osmustexist.ROOT(GetDemo2Path())
 	comparePath(t, path1, path2)
 }
 
 func comparePath(t *testing.T, path1 string, path2 string) {
+	t.Log("path1:", path1)
+	t.Log("path2:", path2)
 	output, err := osexec.NewOsCommand().WithDebug().WithExpectExit(1, "DIFFERENCES FOUND").Exec("diff", "-ru", path1, path2)
 	require.NoError(t, err)
 	if len(output) == 0 {
@@ -47,7 +51,7 @@ func comparePath(t *testing.T, path1 string, path2 string) {
 }
 
 func TestCompareModules(t *testing.T) {
-	path1 := osmustexist.PATH(runpath.PARENT.Join("demo1/go-kratos-demo/go.mod"))
-	path2 := osmustexist.PATH(runpath.PARENT.Join("demo2/go-kratos-demo/go.mod"))
+	path1 := osmustexist.PATH(filepath.Join(GetDemo1Path(), "go.mod"))
+	path2 := osmustexist.PATH(filepath.Join(GetDemo2Path(), "go.mod"))
 	comparePath(t, path1, path2)
 }
