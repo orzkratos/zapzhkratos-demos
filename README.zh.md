@@ -9,8 +9,8 @@
 
 # demos
 项目中使用两个demo演示各种功能的使用
-- [demo1](demo1/go-kratos-demo)
-- [demo2](demo2/go-kratos-demo)
+- [demo1](demo1kratos)
+- [demo2](demo2kratos)
 
 当然也提供 demo1 和 demo2 的代码对比逻辑，让你看到改动的代码块。
 当项目被其他演示项目 fork 的时候，也能跟 source 比较，看到变动。

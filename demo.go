@@ -1,11 +1,14 @@
 package demokratos
 
-import "github.com/yyle88/runpath"
+import (
+	"github.com/orzkratos/demokratos/demo1kratos"
+	"github.com/orzkratos/demokratos/demo2kratos"
+)
 
 func GetDemo1Path() string {
-	return runpath.PARENT.Join("demo1/go-kratos-demo")
+	return demo1kratos.SourceRoot()
 }
 
 func GetDemo2Path() string {
-	return runpath.PARENT.Join("demo2/go-kratos-demo")
+	return demo2kratos.SourceRoot()
 }
