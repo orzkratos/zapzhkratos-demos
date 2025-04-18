@@ -35,7 +35,15 @@ func TestShow2Changes(t *testing.T) {
 func comparePath(t *testing.T, path0 string, path1 string) {
 	t.Log("path0:", path0)
 	t.Log("path1:", path1)
-	output, err := osexec.NewOsCommand().WithDebug().WithExpectExit(1, "DIFFERENCES FOUND").Exec("diff", "-ru", path0, path1)
+	output, err := osexec.NewOsCommand().WithDebug().WithExpectExit(1, "DIFFERENCES FOUND").
+		Exec(
+			"diff",
+			"-ru",
+			"--exclude=go.mod", // Ignore go.mod file, effective only when comparing directories // 忽略 go.mod 文件，仅在比较目录时生效
+			"--exclude=go.sum", // Ignore go.sum file, effective only when comparing directories // 忽略 go.sum 文件，仅在比较目录时生效
+			path0,
+			path1,
+		)
 	require.NoError(t, err)
 	if len(output) == 0 {
 		eroticgo.GREEN.ShowMessage("SAME")

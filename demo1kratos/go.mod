@@ -5,7 +5,7 @@ go 1.22.8
 require (
 	github.com/go-kratos/kratos/v2 v2.8.4
 	github.com/google/wire v0.6.0
-	github.com/yyle88/rese v0.0.9
+	github.com/yyle88/rese v0.0.10
 	github.com/yyle88/runpath v1.0.23
 	go.uber.org/automaxprocs v1.6.0
 	google.golang.org/genproto/googleapis/api v0.0.0-20250106144421-5f5ef82da422
@@ -14,7 +14,7 @@ require (
 )
 
 require (
-	dario.cat/mergo v1.0.0 // indirect
+	dario.cat/mergo v1.0.1 // indirect
 	github.com/fsnotify/fsnotify v1.6.0 // indirect
 	github.com/go-kratos/aegis v0.2.0 // indirect
 	github.com/go-logr/logr v1.4.2 // indirect
@@ -23,10 +23,10 @@ require (
 	github.com/google/uuid v1.6.0 // indirect
 	github.com/gorilla/mux v1.8.1 // indirect
 	github.com/pkg/errors v0.9.1 // indirect
-	github.com/yyle88/done v1.0.24 // indirect
-	github.com/yyle88/must v0.0.20 // indirect
-	github.com/yyle88/mutexmap v1.0.10 // indirect
-	github.com/yyle88/zaplog v0.0.21 // indirect
+	github.com/yyle88/done v1.0.25 // indirect
+	github.com/yyle88/must v0.0.21 // indirect
+	github.com/yyle88/mutexmap v1.0.13 // indirect
+	github.com/yyle88/zaplog v0.0.22 // indirect
 	go.opentelemetry.io/auto/sdk v1.1.0 // indirect
 	go.opentelemetry.io/otel v1.34.0 // indirect
 	go.opentelemetry.io/otel/metric v1.34.0 // indirect
