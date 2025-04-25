@@ -3,11 +3,11 @@ module github.com/orzkratos/demokratos
 go 1.22.8
 
 require (
-	github.com/orzkratos/demokratos/demo1kratos v0.0.0-20250412103431-9d07a7acdc57
-	github.com/orzkratos/demokratos/demo2kratos v0.0.0-20250412103431-9d07a7acdc57
+	github.com/orzkratos/demokratos/demo1kratos v0.0.0-20250418031850-4e843daaa7df
+	github.com/orzkratos/demokratos/demo2kratos v0.0.0-20250418031850-4e843daaa7df
 	github.com/stretchr/testify v1.10.0
 	github.com/yyle88/eroticgo v0.0.3
-	github.com/yyle88/osexec v0.0.25
+	github.com/yyle88/osexec v0.0.27
 	github.com/yyle88/osexistpath v0.0.17
 	github.com/yyle88/runpath v1.0.23
 )
