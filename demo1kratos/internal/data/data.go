@@ -1,9 +1,9 @@
 package data
 
 import (
-	"github.com/go-kratos/kratos/v2/log"
 	"github.com/google/wire"
 	"github.com/orzkratos/demokratos/demo1kratos/internal/conf"
+	"github.com/orzkratos/zapzhkratos"
 )
 
 // ProviderSet is data providers.
@@ -15,9 +15,11 @@ type Data struct {
 }
 
 // NewData .
-func NewData(c *conf.Data, logger log.Logger) (*Data, func(), error) {
+func NewData(c *conf.Data, zap匝普日志 *zapzhkratos.T匝普日志) (*Data, func(), error) {
+	zapLog := zap匝普日志.Sub模块匝普()
+	zapLog.SUG.Debugln("准备链接数据资源")
 	cleanup := func() {
-		log.NewHelper(logger).Info("closing the data resources")
+		zapLog.SUG.Info("准备关闭数据资源")
 	}
 	return &Data{}, cleanup, nil
 }
