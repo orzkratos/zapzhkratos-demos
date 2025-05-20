@@ -36,11 +36,14 @@ type GreeterUsecase struct {
 
 // NewGreeterUsecase new a Greeter usecase.
 func NewGreeterUsecase(repo GreeterRepo, zap匝普日志 *zapzhkratos.T匝普日志) *GreeterUsecase {
-	return &GreeterUsecase{repo: repo, zapLog: zap匝普日志.Sub模块匝普()}
+	return &GreeterUsecase{
+		repo:   repo,
+		zapLog: zap匝普日志.Sub模块匝普(),
+	}
 }
 
 // CreateGreeter creates a Greeter, and returns the new Greeter.
 func (uc *GreeterUsecase) CreateGreeter(ctx context.Context, g *Greeter) (*Greeter, error) {
-	uc.zapLog.SUG.Infof("创建打招呼信息: %v", g.Hello)
+	uc.zapLog.SUG.Infof("存储打招呼信息: %v", g.Hello)
 	return uc.repo.Save(ctx, g)
 }
