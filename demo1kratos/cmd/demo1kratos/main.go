@@ -11,6 +11,7 @@ import (
 	"github.com/go-kratos/kratos/v2/transport/http"
 	"github.com/orzkratos/demokratos/demo1kratos/internal/conf"
 	"github.com/orzkratos/zapzhkratos"
+	"github.com/yyle88/done"
 	"github.com/yyle88/rese"
 	"github.com/yyle88/zaplog"
 	_ "go.uber.org/automaxprocs"
@@ -25,8 +26,6 @@ var (
 	Version string
 	// flagconf is the config flag.
 	flagconf string
-
-	id, _ = os.Hostname()
 )
 
 func init() {
@@ -35,7 +34,7 @@ func init() {
 
 func newApp(gs *grpc.Server, hs *http.Server, zap匝普日志 *zapzhkratos.T匝普日志) *kratos.App {
 	return kratos.New(
-		kratos.ID(id),
+		kratos.ID(done.VCE(os.Hostname()).Omit()),
 		kratos.Name(Name),
 		kratos.Version(Version),
 		kratos.Metadata(map[string]string{}),
