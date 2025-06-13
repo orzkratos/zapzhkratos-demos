@@ -7,7 +7,7 @@ require (
 	github.com/orzkratos/demokratos/demo2kratos v0.0.1
 	github.com/stretchr/testify v1.10.0
 	github.com/yyle88/eroticgo v0.0.4
-	github.com/yyle88/osexec v0.0.29
+	github.com/yyle88/osexec v0.0.31
 	github.com/yyle88/osexistpath v0.0.17
 	github.com/yyle88/runpath v1.0.23
 )

@@ -35,7 +35,7 @@ func TestShow2Changes(t *testing.T) {
 func comparePath(t *testing.T, path0 string, path1 string) {
 	t.Log("path0:", path0)
 	t.Log("path1:", path1)
-	output, err := osexec.NewOsCommand().WithDebugShowCmd(true).WithExpectExit(1, "DIFFERENCES FOUND").
+	output, err := osexec.NewOsCommand().WithDebugMode(osexec.SHOW_COMMAND).WithExpectExit(1, "DIFFERENCES FOUND").
 		Exec(
 			"diff",
 			"-ruN",
