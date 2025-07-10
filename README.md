@@ -30,6 +30,7 @@ When this project is forked, you can also compare it with the source to see the 
 |    i18n     |  https://github.com/orzkratos/i18nkratos-demos  |
 | swagger-doc | https://github.com/orzkratos/swaggokratos-demos |
 |    trace    | https://github.com/orzkratos/tracekratos-demos  |
+|  unittest   |  https://github.com/orzkratos/testkratos-demos  |
 | vue3-client |  https://github.com/orzkratos/vue3kratos-demos  |
 |    wire     | https://github.com/orzkratos/wire2kratos-demos  |
 |     zap     |  https://github.com/orzkratos/zapkratos-demos   |
