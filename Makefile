@@ -25,7 +25,9 @@ merge-step3:
 	git checkout main
 
 merge-step4:
-	git merge upstream/main
+	# git merge upstream/main
+	# 假如在界面里直接点击执行时，使用 "--no-edit" 就不会弹出对话框
+	git merge upstream/main --no-edit
 	git status
 
 merge-step5:
