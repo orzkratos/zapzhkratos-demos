@@ -5,7 +5,7 @@ go 1.22.8
 require (
 	github.com/go-kratos/kratos/v2 v2.8.4
 	github.com/google/wire v0.6.0
-	github.com/yyle88/done v1.0.26
+	github.com/yyle88/done v1.0.27
 	github.com/yyle88/rese v0.0.10
 	github.com/yyle88/runpath v1.0.23
 	go.uber.org/automaxprocs v1.6.0
