@@ -9,6 +9,10 @@ init:
 	# 这个工具用于项目的静态检查
 	go install github.com/go-mate/go-lint/cmd/go-lint@latest
 
+all:
+	cd demo1kratos && make all
+	cd demo2kratos && make all
+
 # 当你的kratos项目在proto里新增接口时，通过这个命令能够在对应的服务里也增加函数逻辑，在删除接口时也能把服务代码改为非导出的，以下是使用的样例
 orz:
 	cd demo1kratos && orzkratos-srv-proto -auto

@@ -18,10 +18,10 @@ require (
 	github.com/pmezard/go-difflib v1.0.1-0.20181226105442-5d4384ee4fb2 // indirect
 	github.com/yyle88/done v1.0.27 // indirect
 	github.com/yyle88/erero v1.0.23 // indirect
-	github.com/yyle88/must v0.0.25 // indirect
+	github.com/yyle88/must v0.0.26 // indirect
 	github.com/yyle88/mutexmap v1.0.14 // indirect
 	github.com/yyle88/printgo v1.0.5 // indirect
-	github.com/yyle88/rese v0.0.10 // indirect
+	github.com/yyle88/rese v0.0.11 // indirect
 	github.com/yyle88/sure v0.0.40 // indirect
 	github.com/yyle88/syntaxgo v0.0.53 // indirect
 	github.com/yyle88/tern v0.0.8 // indirect
