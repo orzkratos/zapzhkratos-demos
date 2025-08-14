@@ -31,11 +31,9 @@ orz:
 # 1. 首先检查工作区状态 git status，如有未提交的修改需要处理：
 #    - 仅包含 go.mod/go.sum 的变化：git stash (依赖升级可稍后再合)
 #    - 有业务代码变化：需要先提交代码，避免混合提交历史
-# 2. 按顺序执行 merge-step1 到 merge-step8 完成同步
+# 2. 按顺序执行 merge-step1 到 merge-step12 完成同步的操作
 # 3. 如果有冲突，自行解决 (常见于 go.mod/go.sum 文件)
-# 4. 完成后提交修改：git add . && git commit --amend --no-edit (推荐，把少量依赖包升级的变动合并到merge commit)
-#    或单独提交：git add . && git commit -m "简单升级依赖包"
-# 5. 若任何步骤出现错误需要再次修改代码/依赖时，改完都要再次运行测试和代码静态检查，避免引入新问题
+# 4. 若任何步骤出现错误需要再次修改代码/依赖时，改完都要再次运行测试和代码静态检查，避免引入新问题
 
 merge-step1:
 	# 添加上游仓库为远程源
@@ -54,6 +52,14 @@ merge-step3:
 	@echo "✅ 已切换到 main 分支里"
 
 merge-step4:
+	# 检查当前是否有未提交的代码，如果有变动则暂存起来
+	git status
+	# 如果有未提交的变动，暂存到 stash（会自动检查是否有变动）
+	git diff --quiet || git stash push -m "临时保存：merge 前的未提交变动"
+	git status
+	@echo "✅ 已检查并暂存未提交的代码（如果有的话）"
+
+merge-step5:
 	# 合并上游仓库的 main 分支，使用 --no-edit 避免弹出编辑器，这样适合在脚本里执行
 	git merge upstream/main --no-edit
 	git status
@@ -66,19 +72,47 @@ merge-step4:
 	# 【再次强调】解决冲突后不要直接使用 git commit，这会破坏 merge 流程的状态管理
 	@echo "✅ 已合并上游代码-请检查是否有冲突需要解决"
 
-merge-step5:
+merge-step6:
+	# 假如 merge 无冲突则跳过这步就行
+	# 当解决完所有冲突时，需要执行 git merge --continue
+	# 检查是否还在 merge 状态，并判断冲突是否已全部解决
+	@if [ -f .git/MERGE_HEAD ]; then \
+		echo "检测到 merge 状态，检查冲突解决情况"; \
+		if git diff --name-only --diff-filter=U | grep -q .; then \
+			echo "⚠️  发现未解决的冲突文件："; \
+			git diff --name-only --diff-filter=U; \
+			echo "请手动解决所有冲突后再执行此步骤"; \
+			exit 1; \
+		else \
+			echo "已解决所有冲突，继续合并代码"; \
+			git add -A; \
+			git merge --continue; \
+		fi; \
+	else \
+		echo "merge 已完成，无需继续"; \
+	fi
+	git status
+	@echo "✅ 已完成 merge 流程"
+
+merge-step7:
 	# 升级所有项目的依赖包到最新版本
-	# depbump: 升级根目录依赖
-	# depbump directs: 升级子项目的直接依赖
+	# depbump: 完整升级根目录依赖
+	# depbump directs: 依次升级子项目的直接依赖
 	depbump
 	# 在项目根目录里进第1个项目
 	cd demo1kratos && depbump directs
 	# 在项目根目录里进第2个项目
 	cd demo2kratos && depbump directs
-	# 在升级完以后如果前面 merge 的已经完成而这里有新增变动，就把新增变动 git commit --amend 补充到 merge 的修改里
 	@echo "✅ 已升级所有依赖包"
 
-merge-step6:
+merge-step8:
+	# 检查是否有依赖升级的变动，如果有则单独提交
+	git add -A
+	git diff --cached --quiet || git commit -m "简单升级依赖包"
+	git status
+	@echo "✅ 已提交依赖升级变动（如果有的话）"
+
+merge-step9:
 	# 运行所有的测试确保代码正常工作
 	# 清理测试缓存避免旧缓存影响结果
 	go clean -testcache
@@ -89,7 +123,7 @@ merge-step6:
 	cd demo2kratos && go test -v ./...
 	@echo "✅ 已进行单元测试"
 
-merge-step7:
+merge-step10:
 	# 整理 go.mod 和 go.sum 文件
 	# -e 参数允许在有错误时继续执行
 	go mod tidy -e
@@ -99,7 +133,15 @@ merge-step7:
 	cd demo2kratos && go mod tidy -e
 	@echo "✅ 已整理所有依赖"
 
-merge-step8:
+merge-step11:
 	# 运行代码静态检查和格式化
 	go-lint
 	@echo "✅ 已进行代码检查"
+
+merge-step12:
+	# 恢复之前暂存的代码（如果有的话）
+	# 检查是否有 stash 存在，如果有则恢复
+	git stash list
+	git stash list | grep -q "临时保存：merge 前的未提交变动" && git stash pop || echo "没有找到需要恢复的 stash"
+	git status
+	@echo "✅ 已恢复之前暂存的代码（如果有的话）"
