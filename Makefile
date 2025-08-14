@@ -81,11 +81,15 @@ merge-step6:
 		if git diff --name-only --diff-filter=U | grep -q .; then \
 			echo "⚠️  发现未解决的冲突文件："; \
 			git diff --name-only --diff-filter=U; \
-			echo "请手动解决所有冲突后再执行此步骤"; \
+			echo "请手动解决所有冲突后再执行此步骤！"; \
+			echo "解决完冲突以后请手动添加这些文件："; \
+			for file in $$(git diff --name-only --diff-filter=U); do \
+				echo "  git add $$file"; \
+			done; \
+			echo "或者添加全部：git add -A"; \
 			exit 1; \
 		else \
 			echo "已解决所有冲突，继续合并代码"; \
-			git add -A; \
 			git merge --continue; \
 		fi; \
 	else \
@@ -107,8 +111,7 @@ merge-step7:
 
 merge-step8:
 	# 检查是否有依赖升级的变动，如果有则单独提交
-	git add -A
-	git diff --cached --quiet || git commit -m "简单升级依赖包"
+	git diff --quiet || (git add -A && git commit -m "简单升级依赖包")
 	git status
 	@echo "✅ 已提交依赖升级变动（如果有的话）"
 
