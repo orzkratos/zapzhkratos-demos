@@ -15,8 +15,8 @@ all:
 
 # 当你的kratos项目在proto里新增接口时，通过这个命令能够在对应的服务里也增加函数逻辑，在删除接口时也能把服务代码改为非导出的，以下是使用样例
 orz:
-	cd demo1kratos && orzkratos-srv-proto -auto
-	cd demo2kratos && orzkratos-srv-proto -auto
+	cd demo1kratos && make all && orzkratos-srv-proto -auto
+	cd demo2kratos && make all && orzkratos-srv-proto -auto
 
 # ========================================
 # 同步上游仓库最新修改到 fork 项目的完整流程
