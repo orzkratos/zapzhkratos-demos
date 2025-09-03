@@ -27,15 +27,12 @@ require (
 	github.com/gorilla/mux v1.8.1 // indirect
 	github.com/orzkratos/zapkratos v0.0.7 // indirect
 	github.com/pkg/errors v0.9.1 // indirect
+	github.com/rogpeppe/go-internal v1.13.1 // indirect
+	github.com/stretchr/testify v1.11.1 // indirect
 	github.com/yyle88/erero v1.0.23 // indirect
 	github.com/yyle88/mutexmap v1.0.14 // indirect
-	github.com/yyle88/zaplog v0.0.26 // indirect
-	go.opentelemetry.io/auto/sdk v1.1.0 // indirect
 	go.opentelemetry.io/otel v1.38.0 // indirect
-	go.opentelemetry.io/otel/metric v1.38.0 // indirect
-	go.opentelemetry.io/otel/trace v1.38.0 // indirect
 	go.uber.org/multierr v1.11.0 // indirect
-	go.uber.org/zap v1.27.0 // indirect
 	golang.org/x/net v0.43.0 // indirect
 	golang.org/x/sync v0.16.0 // indirect
 	golang.org/x/sys v0.35.0 // indirect
