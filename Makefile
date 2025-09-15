@@ -15,6 +15,8 @@ init:
 	go install github.com/go-mate/depbump/cmd/depbump@latest
 	# go-lint: 代码质量守护者，自动格式化 + 静态检查
 	go install github.com/go-mate/go-lint/cmd/go-lint@latest
+	# clang-format-batch: 批量格式化 proto 和 cpp 等多种语言代码
+	go install github.com/go-xlan/clang-format/cmd/clang-format-batch@latest
 	@echo "✅ 工具安装完成！现在可以开始愉快地开发啦"
 
 # 构建所有演示项目，包括 proto 生成、配置文件处理、代码生成等
@@ -59,10 +61,26 @@ orz:
 # 4. 若任何步骤出现错误需要再次修改代码/依赖时，改完都要再次运行测试和代码静态检查，避免引入新问题
 
 merge-step1:
-	# 添加上游仓库为远程源
+	# 添加上游仓库为远程源，智能处理重复添加的情况
 	# 注意: 如果 upstream 远程源已存在，而且是同名仓库，就忽略重复的错误，因为这不是问题，但是假如指向其他仓库，就报错，而且不往下执行
-	git remote add upstream git@github.com:orzkratos/demokratos.git
-	@echo "✅ 已添加上游仓库远程源"
+	@EXPECTED_REPO="git@github.com:orzkratos/demokratos.git"; \
+	if git remote get-url upstream >/dev/null 2>&1; then \
+		CURRENT_REPO=$$(git remote get-url upstream); \
+		if [ "$$CURRENT_REPO" = "$$EXPECTED_REPO" ]; then \
+			echo "upstream 远程源已存在且指向正确仓库: $$EXPECTED_REPO"; \
+			echo "✅ 已确认上游仓库远程源"; \
+		else \
+			echo "❌ 错误: upstream 远程源已存在但指向不同仓库"; \
+			echo "   当前指向: $$CURRENT_REPO"; \
+			echo "   期望指向: $$EXPECTED_REPO"; \
+			echo "   请手动处理: git remote remove upstream 或 git remote set-url upstream $$EXPECTED_REPO"; \
+			exit 1; \
+		fi; \
+	else \
+		echo "正在添加上游仓库远程源: $$EXPECTED_REPO"; \
+		git remote add upstream "$$EXPECTED_REPO"; \
+		echo "✅ 已添加上游仓库远程源"; \
+	fi
 
 merge-step2:
 	# 获取上游仓库的最新代码，不获取标签以避免冲突
@@ -124,12 +142,12 @@ merge-step6:
 merge-step7:
 	# 升级所有项目的依赖包到最新版本
 	# depbump: 完整升级根目录依赖
-	# depbump directs: 依次升级子项目的直接依赖
-	depbump
-	# 在项目根目录里进第1个项目
-	cd demo1kratos && depbump directs
-	# 在项目根目录里进第2个项目
-	cd demo2kratos && depbump directs
+	# depbump directs: 依次升级子项目的直接依赖（优先使用 depbump，出错时才用 depbump directs）
+	depbump || depbump directs
+	# 在项目根目录里进第1个项目，优先尝试完整升级，失败则使用仅直接依赖升级
+	cd demo1kratos && (depbump || depbump directs)
+	# 在项目根目录里进第2个项目，优先尝试完整升级，失败则使用仅直接依赖升级
+	cd demo2kratos && (depbump || depbump directs)
 	@echo "✅ 已升级所有依赖包"
 
 merge-step8:

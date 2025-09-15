@@ -9,7 +9,7 @@ require (
 	github.com/yyle88/eroticgo v0.0.4
 	github.com/yyle88/osexec v0.0.32
 	github.com/yyle88/osexistpath v0.0.17
-	github.com/yyle88/runpath v1.0.23
+	github.com/yyle88/runpath v1.0.24
 )
 
 require (
