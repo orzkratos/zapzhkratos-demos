@@ -44,6 +44,27 @@ orz:
 	@echo "✅ 同步完成！请检查生成的代码并完善业务逻辑"
 
 # ========================================
+# TEMPLATE BEGIN: TEST AND COVERAGE CONFIG
+# ========================================
+# Test and Coverage (GitHub Actions)
+# ========================================
+
+COVERAGE_DIR ?= .coverage.out
+
+# cp from: https://github.com/yyle88/gormrepo/blob/c31435669714611c9ebde6975060f48cd5634451/Makefile#L4
+test:
+	@if [ -d $(COVERAGE_DIR) ]; then rm -r $(COVERAGE_DIR); fi
+	@mkdir $(COVERAGE_DIR)
+	make test-with-flags TEST_FLAGS='-v -race -covermode atomic -coverprofile $$(COVERAGE_DIR)/combined.txt -bench=. -benchmem -timeout 20m'
+
+test-with-flags:
+	@go test $(TEST_FLAGS) ./...
+
+# ========================================
+# TEMPLATE END: TEST AND COVERAGE CONFIG
+# ========================================
+
+# ========================================
 # 同步上游仓库最新修改到 fork 项目的完整流程
 # ========================================
 # 背景说明：
@@ -63,6 +84,13 @@ orz:
 merge-step1:
 	# 添加上游仓库为远程源，智能处理重复添加的情况
 	# 注意: 如果 upstream 远程源已存在，而且是同名仓库，就忽略重复的错误，因为这不是问题，但是假如指向其他仓库，就报错，而且不往下执行
+	# 检查当前是否是源项目本身
+	@ORIGIN_REPO=$$(git remote get-url origin 2>/dev/null || echo ""); \
+	if echo "$$ORIGIN_REPO" | grep -q "orzkratos/demokratos.git"; then \
+		echo "⚠️  当前是源项目，该操作仅适用于 fork 项目"; \
+		exit 1; \
+	fi
+	# 执行上游仓库添加逻辑
 	@EXPECTED_REPO="git@github.com:orzkratos/demokratos.git"; \
 	if git remote get-url upstream >/dev/null 2>&1; then \
 		CURRENT_REPO=$$(git remote get-url upstream); \
