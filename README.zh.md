@@ -34,6 +34,24 @@
 
 当此项目被 fork 时，你也可以将其与源项目进行比较，查看差异。
 
+### Changes DIR
+
+[changes/](./changes) DIR 包含记录代码差异的 markdown 文件：
+
+- [changes/demo1.md](./changes/demo1.md) - Demo1 相对源项目的变更
+- [changes/demo2.md](./changes/demo2.md) - Demo2 相对源项目的变更
+
+这些文件通过测试自动生成：
+
+```bash
+go test -v -run TestGenerate1Changes  # 生成 demo1.md
+go test -v -run TestGenerate2Changes  # 生成 demo2.md
+```
+
+**在源项目中：** 文件显示 `✅ NO CHANGES`
+
+**在 fork 项目中：** 文件显示代码差异并带语法高亮，简单直观地在 GitHub 上查看定制化的改动。
+
 ## Fork 项目列表
 
 |    演示     |                       仓库                       |
