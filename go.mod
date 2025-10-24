@@ -3,8 +3,8 @@ module github.com/orzkratos/demokratos
 go 1.25.0
 
 require (
-	github.com/orzkratos/demokratos/demo1kratos v0.0.8
-	github.com/orzkratos/demokratos/demo2kratos v0.0.8
+	github.com/orzkratos/demokratos/demo1kratos v0.0.9
+	github.com/orzkratos/demokratos/demo2kratos v0.0.9
 	github.com/stretchr/testify v1.11.1
 	github.com/yyle88/eroticgo v0.0.5
 	github.com/yyle88/osexec v0.0.32
@@ -18,7 +18,7 @@ require (
 	github.com/pkg/errors v0.9.1 // indirect
 	github.com/pmezard/go-difflib v1.0.1-0.20181226105442-5d4384ee4fb2 // indirect
 	github.com/yyle88/done v1.0.27 // indirect
-	github.com/yyle88/erero v1.0.23 // indirect
+	github.com/yyle88/erero v1.0.24 // indirect
 	github.com/yyle88/must v0.0.26 // indirect
 	github.com/yyle88/mutexmap v1.0.14 // indirect
 	github.com/yyle88/rese v0.0.11 // indirect

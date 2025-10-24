@@ -247,6 +247,7 @@ func generateChangesFile(t *testing.T, path0, path1, outputPath string) {
 		Exec(
 			"diff",
 			"-ruN",
+			"-U3",              // Show 3 lines of context around each change
 			"--exclude=go.mod", // 忽略 go.mod 文件，避免依赖版本差异影响比较
 			"--exclude=go.sum", // 忽略 go.sum 文件，避免依赖版本差异影响比较
 			"--exclude=bin",    // 忽略 bin 目录，避免编译后的二进制文件差异影响比较
@@ -266,7 +267,8 @@ func generateChangesFile(t *testing.T, path0, path1, outputPath string) {
 	}
 
 	var sourcePath string
-	var adds, cuts []string
+	var diffLines []string
+	var addCount, cutCount int
 
 	ptx := printgo.NewPTX()
 	ptx.Println("# Changes")
@@ -275,14 +277,11 @@ func generateChangesFile(t *testing.T, path0, path1, outputPath string) {
 	ptx.Println()
 
 	processFile := func() {
-		if sourcePath != "" && (len(adds) > 0 || len(cuts) > 0) {
-			ptx.Printf("## %s (+%d -%d)\n\n", sourcePath, len(adds), len(cuts))
+		if sourcePath != "" && (addCount > 0 || cutCount > 0) {
+			ptx.Printf("## %s (+%d -%d)\n\n", sourcePath, addCount, cutCount)
 			ptx.Println("```diff")
-			for _, line := range cuts {
-				ptx.Printf("- %s\n", line)
-			}
-			for _, line := range adds {
-				ptx.Printf("+ %s\n", line)
+			for _, line := range diffLines {
+				ptx.Println(line)
 			}
 			ptx.Println("```")
 			ptx.Println()
@@ -293,7 +292,7 @@ func generateChangesFile(t *testing.T, path0, path1, outputPath string) {
 		switch {
 		case strings.HasPrefix(line, "diff -ruN"):
 			processFile() // 处理上一个文件
-			sourcePath, adds, cuts = "", nil, nil
+			sourcePath, diffLines, addCount, cutCount = "", nil, 0, 0
 
 		case strings.HasPrefix(line, "---"):
 			// 旧文件路径，跳过
@@ -307,11 +306,23 @@ func generateChangesFile(t *testing.T, path0, path1, outputPath string) {
 				}
 			}
 
+		case strings.HasPrefix(line, "@@"):
+			// Chunk header, include it for context
+			// Chunk 头，包含它作为上下文
+			diffLines = append(diffLines, line)
+
 		case strings.HasPrefix(line, "+") && !strings.HasPrefix(line, "+++"):
-			adds = append(adds, line[1:])
+			diffLines = append(diffLines, line)
+			addCount++
 
 		case strings.HasPrefix(line, "-") && !strings.HasPrefix(line, "---"):
-			cuts = append(cuts, line[1:])
+			diffLines = append(diffLines, line)
+			cutCount++
+
+		case strings.HasPrefix(line, " "):
+			// Context line (space prefix indicates unchanged line)
+			// 上下文行（空格前缀表示未改变的行）
+			diffLines = append(diffLines, line)
 		}
 	}
 
