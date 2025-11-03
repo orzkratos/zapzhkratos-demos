@@ -114,6 +114,8 @@ merge-step2:
 	# 获取上游仓库的最新代码，不获取标签以避免冲突
 	git fetch --no-tags upstream main
 	@echo "✅ 已获取上游仓库最新代码"
+	# 假如你不小心已经同步源项目的标签，还可以这样让从远程完全同步子项目的标签
+	# git fetch origin --tags --prune --prune-tags
 
 merge-step3:
 	# 确保当前在 main 分支里
@@ -134,6 +136,7 @@ merge-step5:
 	git status
 	# 【重要提醒】假如出现冲突，请严格按照以下步骤操作：
 	# 1. 编辑冲突文件，逐个解决所有 <<<<<<< ======= >>>>>>> 标记的冲突
+	# 【技巧策略】假如是go.mod有冲突，在仅版本不同时，通过比较来挑选较新的版号
 	# 【技巧策略】假如是go.sum有冲突，也可以不手动改，而是在解决完 go.mod 的冲突后执行 go mod tidy 即可解决
 	# 2. 使用 git add <文件名> 将解决后的文件标记为已解决
 	# 3. 继续合并流程：git merge --continue（绝对不要使用 git commit）

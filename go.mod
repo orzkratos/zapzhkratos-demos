@@ -23,7 +23,7 @@ require (
 	github.com/yyle88/mutexmap v1.0.14 // indirect
 	github.com/yyle88/rese v0.0.11 // indirect
 	github.com/yyle88/sure v0.0.40 // indirect
-	github.com/yyle88/syntaxgo v0.0.53 // indirect
+	github.com/yyle88/syntaxgo v0.0.54 // indirect
 	github.com/yyle88/tern v0.0.9 // indirect
 	github.com/yyle88/zaplog v0.0.27 // indirect
 	go.uber.org/multierr v1.11.0 // indirect

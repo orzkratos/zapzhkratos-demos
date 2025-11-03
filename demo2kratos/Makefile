@@ -64,6 +64,8 @@ build:
 generate:
 	go generate ./...
 	go mod tidy
+	@# Remove obsolete +build tags from wire_gen.go
+	@sed -i '' '/^\/\/ +build/d' ./cmd/*/wire_gen.go
 
 .PHONY: all
 # generate all
