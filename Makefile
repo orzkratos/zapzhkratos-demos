@@ -17,6 +17,8 @@ init:
 	go install github.com/go-mate/go-lint/cmd/go-lint@latest
 	# clang-format-batch: 批量格式化 proto 和 cpp 等多种语言代码
 	go install github.com/go-xlan/clang-format/cmd/clang-format-batch@latest
+	# protoc-gen-orzkratos-errors: proto 错误定义自动生成 Go 代码，提供错误码枚举和错误嵌套功能
+	go install github.com/orzkratos/errgenkratos/cmd/protoc-gen-orzkratos-errors@latest
 	@echo "✅ 工具安装完成！现在可以开始愉快地开发啦"
 
 # 构建所有演示项目，包括 proto 生成、配置文件处理、代码生成等
