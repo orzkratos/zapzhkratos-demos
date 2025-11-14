@@ -3,16 +3,20 @@ package demokratos_test
 import (
 	"fmt"
 	"os"
+	"os/exec"
 	"path/filepath"
+	"slices"
 	"strings"
 	"testing"
 
 	"github.com/orzkratos/demokratos"
 	"github.com/stretchr/testify/require"
 	"github.com/yyle88/eroticgo"
+	"github.com/yyle88/must"
 	"github.com/yyle88/osexec"
 	"github.com/yyle88/osexistpath/osmustexist"
 	"github.com/yyle88/printgo"
+	"github.com/yyle88/rese"
 	"github.com/yyle88/runpath"
 )
 
@@ -307,8 +311,8 @@ func generateChangesFile(t *testing.T, path0, path1, outputPath string) {
 			}
 
 		case strings.HasPrefix(line, "@@"):
-			// Chunk header, include it for context
-			// Chunk 头，包含它作为上下文
+			// Chunk heading, include it as context
+			// Chunk 头部，包含作为上下文
 			diffLines = append(diffLines, line)
 
 		case strings.HasPrefix(line, "+") && !strings.HasPrefix(line, "+++"):
@@ -332,4 +336,103 @@ func generateChangesFile(t *testing.T, path0, path1, outputPath string) {
 	// 写入文件
 	require.NoError(t, os.WriteFile(outputPath, ptx.Bytes(), 0644))
 	t.Logf("Generated %s with differences", outputPath)
+}
+
+func TestGenerateXChanges(t *testing.T) {
+	{
+		treePath, err := exec.LookPath("tree")
+		if err != nil {
+			t.Skip("tree is not available on this system, skipping test case")
+		}
+		t.Logf("Found tree at: %s", treePath)
+	}
+
+	root := runpath.PARENT.Path()
+	t.Log(root)
+	//在这里列举出里面的目录-排除现有的目录以外的其他目录
+
+	excludeSomeNames := []string{
+		".git", // Can be omitted since hidden DIRs are skipped below // 这里可以省略，因为下面会跳过隐藏 DIR
+		"changes",
+		filepath.Base(GetDemo1Path()),
+		filepath.Base(GetDemo2Path()),
+	}
+	t.Log(excludeSomeNames)
+
+	var matchNames []string
+	for _, item := range rese.A1(os.ReadDir(root)) {
+		if item.IsDir() {
+			name := item.Name()
+			t.Log(name)
+			if strings.HasPrefix(name, ".") {
+				continue
+			}
+			if slices.Contains(excludeSomeNames, name) {
+				continue
+			}
+			t.Log(name)
+			matchNames = append(matchNames, name)
+		}
+	}
+	t.Log(matchNames)
+
+	//把其它目录的 tree 信息输出出来到文本里
+	outputPath := osmustexist.FILE(filepath.Join(root, "changes", "demos-toolchain-trees.md"))
+	t.Log(outputPath)
+
+	if len(matchNames) == 0 {
+		content := "# Changes\n\n✅ NO CHANGES\n"
+		must.Done(os.WriteFile(outputPath, []byte(content), 0644))
+		return
+	}
+
+	ptx := printgo.NewPTX()
+	ptx.Println("# Changes")
+	ptx.Println()
+
+	// Overview section with sibling projects list
+	// 概览章节，列出兄弟项目
+	ptx.Println("## Overview")
+	ptx.Println()
+	ptx.Println("Sibling projects:")
+	ptx.Println()
+	for _, name := range matchNames {
+		ptx.Fprintf("- [%s](#%s)", name, name)
+		ptx.Println()
+	}
+	ptx.Println()
+
+	// Detailed tree structure for each project
+	// 每个项目的详细目录树结构
+	ptx.Println("## Project Structures")
+	ptx.Println()
+	for idx, name := range matchNames {
+		if idx > 0 {
+			ptx.Println("---")
+			ptx.Println()
+		}
+
+		ptx.Fprintf("### %s", name)
+		ptx.Println()
+		ptx.Println()
+		ptx.Fprintf("**Location**: [%s](../%s)", name, name)
+		ptx.Println()
+		ptx.Println()
+		ptx.Println("```bash")
+		ptx.Fprintf("cd %s && tree --noreport", name)
+		ptx.Println()
+		ptx.Println("```")
+		ptx.Println()
+
+		subRoot := filepath.Join(root, name)
+		t.Log(subRoot)
+		treeOutput := rese.A1(osexec.ExecInPath(subRoot, "tree", "--noreport", "--charset=ascii"))
+		t.Log(string(treeOutput))
+
+		ptx.Println("```")
+		ptx.Write(treeOutput)
+		ptx.Println("```")
+		ptx.Println()
+	}
+	must.Done(os.WriteFile(outputPath, ptx.Bytes(), 0644))
 }

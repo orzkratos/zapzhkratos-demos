@@ -99,12 +99,14 @@ make orz
 
 - [changes/demo1.md](./changes/demo1.md) - Demo1 相对源项目的变更
 - [changes/demo2.md](./changes/demo2.md) - Demo2 相对源项目的变更
+- [changes/demos-toolchain-trees.md](./changes/demos-toolchain-trees.md) - 兄弟项目和工具链结构
 
 这些文件通过测试自动生成：
 
 ```bash
-go test -v -run TestGenerate1Changes  # 生成 demo1.md
-go test -v -run TestGenerate2Changes  # 生成 demo2.md
+go test -v -run TestGenerate1Changes # 生成 demo1.md
+go test -v -run TestGenerate2Changes # 生成 demo2.md
+go test -v -run TestGenerateXChanges # 生成 demos-toolchain-trees.md
 ```
 
 **在源项目中：** 文件显示 `✅ NO CHANGES`
@@ -113,23 +115,26 @@ go test -v -run TestGenerate2Changes  # 生成 demo2.md
 
 ## Fork 项目列表
 
-|     演示      |                       仓库                        |
-|:-----------:|:-----------------------------------------------:|
-|   ast-go    |  https://github.com/orzkratos/astkratos-demos   |
-|    auth     |  https://github.com/orzkratos/authkratos-demos  |
-|  ebz-must   |  https://github.com/orzkratos/ebzkratos-demos   |
-| spf13/cobra | https://github.com/orzkratos/cobrakratos-demos  |
-|    gorm     |  https://github.com/orzkratos/gormkratos-demos  |
-|  http-cors  | https://github.com/orzkratos/cors-kratos-demos  |
-|    i18n     |  https://github.com/orzkratos/i18nkratos-demos  |
-|    nacos    | https://github.com/orzkratos/nacos-kratos-demos |
-| swagger-doc | https://github.com/orzkratos/swaggokratos-demos |
-|    trace    | https://github.com/orzkratos/tracekratos-demos  |
-|  unittest   |  https://github.com/orzkratos/testkratos-demos  |
-| vue3-client |  https://github.com/orzkratos/vue3kratos-demos  |
-|    wire     | https://github.com/orzkratos/wire2kratos-demos  |
-|     zap     |  https://github.com/orzkratos/zapkratos-demos   |
-| zap-zh-hans | https://github.com/orzkratos/zapzhkratos-demos  |
+|     演示      |                         仓库                          |
+|:-----------:|:---------------------------------------------------:|
+|   ast-go    |    https://github.com/orzkratos/astkratos-demos     |
+|    auth     |    https://github.com/orzkratos/authkratos-demos    |
+|  ebz-must   |    https://github.com/orzkratos/ebzkratos-demos     |
+| spf13/cobra |   https://github.com/orzkratos/cobrakratos-demos    |
+|    gorm     |    https://github.com/orzkratos/gormkratos-demos    |
+|  http-cors  |   https://github.com/orzkratos/cors-kratos-demos    |
+|    i18n     |    https://github.com/orzkratos/i18nkratos-demos    |
+|    nacos    |   https://github.com/orzkratos/nacos-kratos-demos   |
+| swagger-doc |   https://github.com/orzkratos/swaggokratos-demos   |
+|    trace    |   https://github.com/orzkratos/tracekratos-demos    |
+|  unittest   |    https://github.com/orzkratos/testkratos-demos    |
+| vue3-client |    https://github.com/orzkratos/vue3kratos-demos    |
+|    wire     |   https://github.com/orzkratos/wire2kratos-demos    |
+|     zap     |    https://github.com/orzkratos/zapkratos-demos     |
+| zap-zh-hans |   https://github.com/orzkratos/zapzhkratos-demos    |
+|   migrate   |  https://github.com/orzkratos/migratekratos-demos   |
+|    ping     |    https://github.com/orzkratos/pingkratos-demos    |
+| supervisors | https://github.com/orzkratos/supervisorkratos-demos |
 
 <!-- TEMPLATE (ZH) BEGIN: STANDARD PROJECT FOOTER -->
 <!-- VERSION 2025-09-26 07:39:27.188023 +0000 UTC -->

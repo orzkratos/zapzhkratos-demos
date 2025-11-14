@@ -21,6 +21,13 @@ init:
 	go install github.com/orzkratos/errgenkratos/cmd/protoc-gen-orzkratos-errors@latest
 	@echo "✅ 工具安装完成！现在可以开始愉快地开发啦"
 
+# 使用命令行整理项目中的代码
+fmt:
+	@echo "开始整理所有演示项目的代码..."
+	cd demo1kratos && clang-format-batch --extensions=proto
+	cd demo2kratos && clang-format-batch --extensions=proto
+	@echo "✅ 所有项目的代码整理完成！"
+
 # 构建所有演示项目，包括 proto 生成、配置文件处理、代码生成等
 all:
 	@echo "开始构建所有演示项目..."
