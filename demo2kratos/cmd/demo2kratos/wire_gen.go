@@ -7,28 +7,32 @@ package main
 
 import (
 	"github.com/go-kratos/kratos/v2"
-	"github.com/go-kratos/kratos/v2/log"
 	"github.com/orzkratos/demokratos/demo2kratos/internal/biz"
 	"github.com/orzkratos/demokratos/demo2kratos/internal/conf"
 	"github.com/orzkratos/demokratos/demo2kratos/internal/data"
 	"github.com/orzkratos/demokratos/demo2kratos/internal/server"
 	"github.com/orzkratos/demokratos/demo2kratos/internal/service"
+	"github.com/orzkratos/zapzhkratos"
+)
+
+import (
+	_ "go.uber.org/automaxprocs"
 )
 
 // Injectors from wire.go:
 
 // wireApp init kratos application.
-func wireApp(confServer *conf.Server, confData *conf.Data, logger log.Logger) (*kratos.App, func(), error) {
-	dataData, cleanup, err := data.NewData(confData, logger)
+func wireApp(confServer *conf.Server, confData *conf.Data, t匝普日志 *zapzhkratos.T匝普日志) (*kratos.App, func(), error) {
+	dataData, cleanup, err := data.NewData(confData, t匝普日志)
 	if err != nil {
 		return nil, nil, err
 	}
-	greeterRepo := data.NewGreeterRepo(dataData, logger)
-	greeterUsecase := biz.NewGreeterUsecase(greeterRepo, logger)
-	greeterService := service.NewGreeterService(greeterUsecase)
-	grpcServer := server.NewGRPCServer(confServer, greeterService, logger)
-	httpServer := server.NewHTTPServer(confServer, greeterService, logger)
-	app := newApp(logger, grpcServer, httpServer)
+	greeterRepo := data.NewGreeterRepo(dataData, t匝普日志)
+	greeterUsecase := biz.NewGreeterUsecase(greeterRepo, t匝普日志)
+	greeterService := service.NewGreeterService(greeterUsecase, t匝普日志)
+	grpcServer := server.NewGRPCServer(confServer, greeterService, t匝普日志)
+	httpServer := server.NewHTTPServer(confServer, greeterService, t匝普日志)
+	app := newApp(grpcServer, httpServer, t匝普日志)
 	return app, func() {
 		cleanup()
 	}, nil

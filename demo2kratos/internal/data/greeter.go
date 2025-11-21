@@ -5,18 +5,19 @@ import (
 
 	"github.com/go-kratos/kratos/v2/log"
 	"github.com/orzkratos/demokratos/demo2kratos/internal/biz"
+	"github.com/orzkratos/zapzhkratos"
 )
 
 type greeterRepo struct {
 	data *Data
-	log  *log.Helper
+	slog *log.Helper
 }
 
 // NewGreeterRepo .
-func NewGreeterRepo(data *Data, logger log.Logger) biz.GreeterRepo {
+func NewGreeterRepo(data *Data, zap匝普日志 *zapzhkratos.T匝普日志) biz.GreeterRepo {
 	return &greeterRepo{
 		data: data,
-		log:  log.NewHelper(logger),
+		slog: zap匝普日志.Get奎沱秘书("数据仓库"),
 	}
 }
 
