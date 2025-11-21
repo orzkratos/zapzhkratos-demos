@@ -357,24 +357,24 @@ func TestGenerateXChanges(t *testing.T) {
 		filepath.Base(GetDemo1Path()),
 		filepath.Base(GetDemo2Path()),
 	}
-	t.Log(excludeSomeNames)
+	t.Log("exclude:", excludeSomeNames)
 
 	var matchNames []string
 	for _, item := range rese.A1(os.ReadDir(root)) {
 		if item.IsDir() {
 			name := item.Name()
-			t.Log(name)
+			t.Log("check:", name)
 			if strings.HasPrefix(name, ".") {
 				continue
 			}
 			if slices.Contains(excludeSomeNames, name) {
 				continue
 			}
-			t.Log(name)
+			t.Log("match:", name)
 			matchNames = append(matchNames, name)
 		}
 	}
-	t.Log(matchNames)
+	t.Log("match:", matchNames)
 
 	//把其它目录的 tree 信息输出出来到文本里
 	outputPath := osmustexist.FILE(filepath.Join(root, "changes", "demos-toolchain-trees.md"))
@@ -426,7 +426,7 @@ func TestGenerateXChanges(t *testing.T) {
 
 		subRoot := filepath.Join(root, name)
 		t.Log(subRoot)
-		treeOutput := rese.A1(osexec.ExecInPath(subRoot, "tree", "--noreport", "--charset=ascii"))
+		treeOutput := rese.A1(osexec.ExecInPath(subRoot, "tree", "--noreport", "--charset=ascii", "--gitignore", "-I", "node_modules|.git|bin|.idea|.vscode"))
 		t.Log(string(treeOutput))
 
 		ptx.Println("```")

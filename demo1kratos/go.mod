@@ -5,12 +5,12 @@ go 1.25.0
 require (
 	github.com/go-kratos/kratos/v2 v2.9.1
 	github.com/google/wire v0.7.0
-	github.com/yyle88/done v1.0.27
-	github.com/yyle88/must v0.0.26
-	github.com/yyle88/rese v0.0.11
+	github.com/yyle88/done v1.0.28
+	github.com/yyle88/must v0.0.28
+	github.com/yyle88/rese v0.0.12
 	github.com/yyle88/runpath v1.0.24
 	google.golang.org/genproto/googleapis/api v0.0.0-20251111163417-95abcf5c77ba
-	google.golang.org/grpc v1.76.0
+	google.golang.org/grpc v1.77.0
 	google.golang.org/protobuf v1.36.10
 )
 
@@ -31,7 +31,7 @@ require (
 	go.opentelemetry.io/otel/metric v1.38.0 // indirect
 	go.opentelemetry.io/otel/trace v1.38.0 // indirect
 	go.uber.org/multierr v1.11.0 // indirect
-	go.uber.org/zap v1.27.0 // indirect
+	go.uber.org/zap v1.27.1 // indirect
 	golang.org/x/net v0.47.0 // indirect
 	golang.org/x/sync v0.18.0 // indirect
 	golang.org/x/sys v0.38.0 // indirect

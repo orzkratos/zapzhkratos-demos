@@ -119,6 +119,7 @@ go test -v -run TestGenerateXChanges # 生成 demos-toolchain-trees.md
 |:-----------:|:---------------------------------------------------:|
 |   ast-go    |    https://github.com/orzkratos/astkratos-demos     |
 |    auth     |    https://github.com/orzkratos/authkratos-demos    |
+|   config    |   https://github.com/orzkratos/configkratos-demos   |
 |  ebz-must   |    https://github.com/orzkratos/ebzkratos-demos     |
 | spf13/cobra |   https://github.com/orzkratos/cobrakratos-demos    |
 |    gorm     |    https://github.com/orzkratos/gormkratos-demos    |
