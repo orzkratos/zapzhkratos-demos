@@ -349,7 +349,6 @@ func TestGenerateXChanges(t *testing.T) {
 
 	root := runpath.PARENT.Path()
 	t.Log(root)
-	//在这里列举出里面的目录-排除现有的目录以外的其他目录
 
 	excludeSomeNames := []string{
 		".git", // Can be omitted since hidden DIRs are skipped below // 这里可以省略，因为下面会跳过隐藏 DIR
@@ -359,6 +358,8 @@ func TestGenerateXChanges(t *testing.T) {
 	}
 	t.Log("exclude:", excludeSomeNames)
 
+	// List DIRs except known ones
+	// 列举目录，排除已知的目录
 	var matchNames []string
 	for _, item := range rese.A1(os.ReadDir(root)) {
 		if item.IsDir() {

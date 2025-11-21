@@ -138,20 +138,20 @@ go test -v -run TestGenerateXChanges # 生成 demos-toolchain-trees.md
 | supervisors | https://github.com/orzkratos/supervisorkratos-demos |
 
 <!-- TEMPLATE (ZH) BEGIN: STANDARD PROJECT FOOTER -->
-<!-- VERSION 2025-09-26 07:39:27.188023 +0000 UTC -->
+<!-- VERSION 2025-11-20 04:26:32.402216 +0000 UTC -->
 
 ## 📄 许可证类型
 
-MIT 许可证。详见 [LICENSE](LICENSE)。
+MIT 许可证 - 详见 [LICENSE](LICENSE)。
 
 ---
 
-## 🤝 项目贡献
+## 💬 联系与反馈
 
 非常欢迎贡献代码！报告 BUG、建议功能、贡献代码：
 
-- 🐛 **发现问题？** 在 GitHub 上提交问题并附上重现步骤
-- 💡 **功能建议？** 创建 issue 讨论您的想法
+- 🐛 **问题报告？** 在 GitHub 上提交问题并附上重现步骤
+- 💡 **新颖思路？** 创建 issue 讨论
 - 📖 **文档疑惑？** 报告问题，帮助我们改进文档
 - 🚀 **需要功能？** 分享使用场景，帮助理解需求
 - ⚡ **性能瓶颈？** 报告慢操作，帮助我们优化性能
